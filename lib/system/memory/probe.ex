@@ -4,9 +4,8 @@ defmodule System.Memory.Probe do
 
   alias VegaLite, as: Vl
 
-  def start_link(opts \\ []) do
-    wait_ms = Keyword.get(opts, :poll_interval_ms, 1_000)
-    {:ok, pid} = Task.start_link(__MODULE__, :run, [wait_ms])
+  def start_link(period_ms \\ 1_000) do
+    {:ok, pid} = Task.start_link(__MODULE__, :run, [period_ms])
     send(pid, :measure)
 
     {:ok, pid}
@@ -24,22 +23,23 @@ defmodule System.Memory.Probe do
     parse_memory_measurement!(reading)
   end
 
-  def run(wait_ms) do
+  def run(period_ms) do
     receive do
       :measure ->
-        Probe.learn([:process, :memory, :probe], measure_memory!())
-        Process.send_after(self(), :measure, wait_ms)
-        run(wait_ms)
+        Probe.learn([:system, :memory, :probe], measure_memory!())
+        Process.send_after(self(), :measure, period_ms)
+        run(period_ms)
     end
   end
 
   @impl true
-  def event_name(), do: [:process, :memory, :probe]
+  def event_name(), do: [:system, :memory, :probe]
 
   @impl true
   def compile(data, opts) do
     field = Keyword.get(opts, :field, "vsz")
-    Vl.new(title: "Virtual Memory Size over time", height: 1080, width: 1920)
+
+    Vl.new(title: "Memory size over time", height: 1080, width: 1920)
     |> Vl.data_from_values(data)
     |> Vl.mark(:line)
     |> Vl.encode_field(:x, "t", type: :quantitative)
