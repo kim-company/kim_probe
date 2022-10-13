@@ -1,5 +1,5 @@
 defmodule Probe.Handler do
-  @handler_id "probe.handler"
+  use Agent
 
   def start_link(probes, opts \\ []) do
     path = samples_path(opts)
@@ -16,13 +16,15 @@ defmodule Probe.Handler do
     probes
     |> Enum.map(fn probe -> probe.event_name() end)
     |> Enum.each(fn event_id ->
-      :telemetry.attach(
-        @handler_id,
+      :ok = :telemetry.attach(
+        "probe.handler." <> Enum.join(event_id, "."),
         event_id,
         &__MODULE__.handle_event/4,
         %{agent: agent}
       )
     end)
+
+    {:ok, agent}
   end
 
   def default_samples_path() do
