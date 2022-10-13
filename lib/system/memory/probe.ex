@@ -45,7 +45,7 @@ defmodule System.Memory.Probe do
     |> Vl.encode_field(:x, "t", type: :quantitative)
     |> Vl.encode_field(:y, field,
       type: :quantitative,
-      scale: [zero: false],
+      scale: [zero: false]
     )
   end
 end
