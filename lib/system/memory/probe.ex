@@ -37,15 +37,15 @@ defmodule System.Memory.Probe do
   def event_name(), do: [:process, :memory, :probe]
 
   @impl true
-  def compile(data, _opts) do
+  def compile(data, opts) do
+    field = Keyword.get(opts, :field, "vsz")
     Vl.new(title: "Virtual Memory Size over time", height: 1080, width: 1920)
     |> Vl.data_from_values(data)
     |> Vl.mark(:line)
     |> Vl.encode_field(:x, "t", type: :quantitative)
-    |> Vl.encode_field(:y, "vsz",
+    |> Vl.encode_field(:y, field,
       type: :quantitative,
       scale: [zero: false],
-      title: "Virtual Memory Size"
     )
   end
 end
