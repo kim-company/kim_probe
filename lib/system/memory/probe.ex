@@ -26,7 +26,7 @@ defmodule System.Memory.Probe do
   def run(period_ms) do
     receive do
       :measure ->
-        Probe.learn([:system, :memory, :probe], measure_memory!())
+        :telemetry.execute([:system, :memory, :probe], measure_memory!())
         Process.send_after(self(), :measure, period_ms)
         run(period_ms)
     end

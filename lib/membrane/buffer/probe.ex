@@ -34,7 +34,7 @@ defmodule Membrane.Buffer.Probe do
 
   @impl true
   def handle_process(_pad, buffer = %Membrane.Buffer{pts: pts, dts: dts}, _ctx, label) do
-    Probe.learn([:membrane, :buffer], %{pts: pts, dts: dts}, %{label: label})
+    :telemetry.execute([:membrane, :buffer], %{pts: pts, dts: dts}, %{label: label})
     {{:ok, forward: buffer, demand: :input}, label}
   end
 

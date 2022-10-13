@@ -22,6 +22,7 @@ defmodule Probe.MixProject do
   defp deps do
     [
       {:membrane_core, "~> 0.10.2"},
+      {:telemetry, "~> 1.1"},
       {:jason, "~> 1.4"},
       {:vega_lite, "~> 0.1.6"}
     ]

@@ -51,7 +51,7 @@ defmodule Probe.Handler do
     json =
       metadata
       |> Map.merge(measurement)
-      |> Map.merge(%{event: event})
+      |> Map.merge(%{event: event, t: :erlang.system_time()})
       |> Jason.encode!()
 
     Agent.get(pid, fn fd -> IO.write(fd, [json, ?\n]) end)

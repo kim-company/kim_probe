@@ -11,12 +11,4 @@ defmodule Probe do
       @behaviour Probe
     end
   end
-
-  def learn(event, measurement, metadata \\ %{}) do
-    :telemetry.execute(
-      event,
-      Map.merge(measurement, %{t: :erlang.system_time()}),
-      metadata
-    )
-  end
 end

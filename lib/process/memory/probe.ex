@@ -18,6 +18,7 @@ defmodule Process.Memory.Probe do
         binaries
         |> Enum.map(fn {_ref, size, _ref_count} -> size end)
         |> Enum.count()
+
       _ ->
         0
     end
@@ -26,7 +27,7 @@ defmodule Process.Memory.Probe do
   def run(pid, period_ms) do
     receive do
       :measure ->
-        Probe.learn([:process, :memory, :probe], %{binary: measure_memory(pid)})
+        :telemetry.execute([:process, :memory, :probe], %{binary: measure_memory(pid)})
         Process.send_after(self(), :measure, period_ms)
         run(pid, period_ms)
     end
