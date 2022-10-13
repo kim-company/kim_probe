@@ -16,12 +16,13 @@ defmodule Probe.Handler do
     probes
     |> Enum.map(fn probe -> probe.event_name() end)
     |> Enum.each(fn event_id ->
-      :ok = :telemetry.attach(
-        "probe.handler." <> Enum.join(event_id, "."),
-        event_id,
-        &__MODULE__.handle_event/4,
-        %{agent: agent}
-      )
+      :ok =
+        :telemetry.attach(
+          "probe.handler." <> Enum.join(event_id, "."),
+          event_id,
+          &__MODULE__.handle_event/4,
+          %{agent: agent}
+        )
     end)
 
     {:ok, agent}
@@ -33,7 +34,6 @@ defmodule Probe.Handler do
 
   def export(probe, output_path, opts \\ []) do
     target_event = Enum.map(probe.event_name(), &Atom.to_string/1)
-
 
     opts
     |> samples_path()

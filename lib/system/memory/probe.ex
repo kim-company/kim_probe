@@ -20,7 +20,7 @@ defmodule System.Memory.Probe do
   end
 
   def measure_memory!() do
-    {reading, 0} = System.cmd("ps", ["-o", "vsz,rss", System.pid])
+    {reading, 0} = System.cmd("ps", ["-o", "vsz,rss", System.pid()])
     parse_memory_measurement!(reading)
   end
 

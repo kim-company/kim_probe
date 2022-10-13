@@ -13,7 +13,9 @@ defmodule Mix.Tasks.Probe.Export do
     :probe
     |> Application.fetch_env!(:exportable)
     |> Enum.each(fn {probe, config} ->
-      [output_path, opts] = Enum.map([:output_path, :opts], fn key -> Keyword.fetch!(config, key) end)
+      [output_path, opts] =
+        Enum.map([:output_path, :opts], fn key -> Keyword.fetch!(config, key) end)
+
       Probe.Handler.export(probe, output_path, opts)
     end)
   end

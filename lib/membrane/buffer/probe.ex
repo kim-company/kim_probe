@@ -43,7 +43,12 @@ defmodule Membrane.Buffer.Probe do
 
   @impl true
   def compile(data, opts) do
-    data = Enum.map(data, &Map.update!(&1, :t, fn old -> :erlang.convert_time_unit(old, :native, :microsecond) end))
+    data =
+      Enum.map(
+        data,
+        &Map.update!(&1, :t, fn old -> :erlang.convert_time_unit(old, :native, :microsecond) end)
+      )
+
     field = Keyword.get(opts, :field, "pts")
 
     Vl.new(title: "Buffer #{String.upcase(field)} over time", height: 1080, width: 1920)
