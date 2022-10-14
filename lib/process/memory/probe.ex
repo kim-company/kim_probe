@@ -43,7 +43,7 @@ defmodule Process.Memory.Probe do
     Vl.new(title: "Process memory size over time", height: 1080, width: 1920)
     |> Vl.data_from_values(data)
     |> Vl.mark(:line)
-    |> Vl.encode_field(:x, "t", type: :quantitative)
+    |> Vl.encode_field(:x, "t", type: :ordinal, time_unit: "hoursminutesseconds")
     |> Vl.encode_field(:y, field,
       type: :quantitative,
       scale: [zero: false]
