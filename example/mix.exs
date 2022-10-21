@@ -1,9 +1,9 @@
-defmodule Probe.MixProject do
+defmodule Example.MixProject do
   use Mix.Project
 
   def project do
     [
-      app: :probe,
+      app: :example,
       version: "0.1.0",
       elixir: "~> 1.14",
       start_permanent: Mix.env() == :prod,
@@ -14,18 +14,17 @@ defmodule Probe.MixProject do
   # Run "mix help compile.app" to learn about applications.
   def application do
     [
-      extra_applications: [:logger]
+      extra_applications: [:logger],
+      mod: {Example.Application, []}
     ]
   end
 
   # Run "mix help deps" to learn about dependencies.
   defp deps do
     [
-      {:membrane_core, "~> 0.10.2"},
-      {:telemetry, "~> 1.1"},
-      {:jason, "~> 1.4"},
-      {:vega_lite, "~> 0.1.6"},
-      {:plug, "~> 1.13", optional: true}
+      {:probe, path: ".."},
+      {:plug, "~> 1.13"},
+      {:plug_cowboy, "~> 2.0"}
     ]
   end
 end
