@@ -4,7 +4,8 @@ defmodule System.Memory.Probe do
 
   alias VegaLite, as: Vl
 
-  def start_link(period_ms \\ 1_000) do
+  def start_link(opts \\ []) do
+    period_ms = Keyword.get(opts, :period, 1000)
     {:ok, pid} = Task.start_link(__MODULE__, :run, [period_ms])
     send(pid, :measure)
 

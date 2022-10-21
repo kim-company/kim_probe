@@ -1,7 +1,7 @@
 defmodule Probe.Handler do
   use Agent
 
-  def start_link(probes, opts \\ []) do
+  def start_link(opts \\ []) do
     path = samples_path(opts)
     File.rm_rf(path)
 
@@ -13,7 +13,8 @@ defmodule Probe.Handler do
     # concurrently from multiple sources.
     {:ok, agent} = Agent.start_link(fn -> File.open!(path, [:write, :append]) end)
 
-    probes
+    opts
+    |> Keyword.fetch!(:probes)
     |> Enum.map(fn probe -> probe.event_name() end)
     |> Enum.each(fn event_id ->
       :ok =
