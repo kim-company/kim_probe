@@ -1,21 +1,15 @@
-# Probe
-
-**TODO: Add description**
+# WIP: Probe
+Our way of harnessing Elixir software with delemetry events.
 
 ## Installation
-
-If [available in Hex](https://hex.pm/docs/publish), the package can be installed
-by adding `probe` to your list of dependencies in `mix.exs`:
-
 ```elixir
 def deps do
   [
-    {:probe, "~> 0.1.0"}
+    {:kim_probe, github: "kim-company/kim_probe"}
   ]
 end
 ```
 
-Documentation can be generated with [ExDoc](https://github.com/elixir-lang/ex_doc)
-and published on [HexDocs](https://hexdocs.pm). Once published, the docs can
-be found at <https://hexdocs.pm/probe>.
-
+## Copyright and License
+Copyright 2022, [KIM Keep In Mind GmbH](https://www.keepinmind.info/)
+Licensed under the [Apache License, Version 2.0](LICENSE)
